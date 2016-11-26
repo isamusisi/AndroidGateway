@@ -7,6 +7,7 @@
     <string name="select_sensor_button">select sensors</string>
     <string name="unknown_device">Unknown Device</string>
     <string name="sensor_reading_error">Sensor reading error</string>
+    <string name="blubb">Blubb</string>
 
 
 </resources>
