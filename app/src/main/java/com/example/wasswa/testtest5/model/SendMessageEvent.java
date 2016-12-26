@@ -1,4 +1,4 @@
-package com.example.wasswa.testtest5;
+package com.example.wasswa.testtest5.model;
 
 import java.io.Serializable;
 

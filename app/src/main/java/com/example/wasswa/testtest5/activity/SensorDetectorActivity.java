@@ -1,19 +1,13 @@
-package com.example.wasswa.testtest5;
+package com.example.wasswa.testtest5.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.BaseAdapter;
 
-import java.util.Arrays;
-
-import io.relayr.android.RelayrSdk;
-import io.relayr.java.ble.BleDeviceType;
+import com.example.wasswa.testtest5.R;
+import com.example.wasswa.testtest5.adapter.BleScanAdapter;
 
 public class SensorDetectorActivity extends AppCompatActivity {
 

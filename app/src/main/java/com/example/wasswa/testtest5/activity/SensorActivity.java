@@ -1,4 +1,4 @@
-package com.example.wasswa.testtest5;
+package com.example.wasswa.testtest5.activity;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
@@ -7,18 +7,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.HandlerThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.wasswa.testtest5.R;
+import com.example.wasswa.testtest5.model.SendListEvent;
+import com.example.wasswa.testtest5.adapter.BleScanAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,7 +32,6 @@ import io.relayr.android.RelayrSdk;
 import io.relayr.android.ble.BleDevice;
 import io.relayr.android.ble.RelayrBleSdk;
 import io.relayr.java.ble.BleDeviceType;
-import rx.Observable;
 import rx.functions.Action1;
 
 public class SensorActivity extends AppCompatActivity {

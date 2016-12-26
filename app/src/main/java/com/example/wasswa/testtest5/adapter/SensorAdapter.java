@@ -1,4 +1,4 @@
-package com.example.wasswa.testtest5;
+package com.example.wasswa.testtest5.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.wasswa.testtest5.R;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.relayr.android.ble.BleDevice;
 import io.relayr.android.ble.service.BaseService;
@@ -17,6 +20,7 @@ import io.relayr.android.ble.service.DirectConnectionService;
 import io.relayr.java.model.action.Reading;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Func1;
@@ -31,6 +35,8 @@ public class SensorAdapter extends ArrayAdapter<BleDevice> {
     private ArrayList<BleDevice> aList;
     Context context;
     int resource;
+    HashMap<BleDevice,Subscription> mSubLiist = new HashMap<>();
+    boolean reading;
 
     public SensorAdapter(Context context, int resource, ArrayList<BleDevice> objects) {
         super(context, resource, objects);
@@ -41,10 +47,11 @@ public class SensorAdapter extends ArrayAdapter<BleDevice> {
 
     public void subscribeForUpdates(final BleDevice device, final TextView result) {
 
-        device.connect()
+        mSubLiist.put(device,device.connect()
                 .flatMap(new Func1<BaseService, Observable<Reading>>() {
                     @Override
                     public Observable<Reading> call(BaseService baseService) {
+
                         return ((DirectConnectionService) baseService).getReadings();
                     }
                 })
@@ -73,12 +80,15 @@ public class SensorAdapter extends ArrayAdapter<BleDevice> {
                         result.setText("" + reading.value);
                         SensorAdapter.this.notifyDataSetChanged();
                     }
-                });
+                })
+        );
+
     }
 
     private class ViewHolder {
         TextView sensorValue;
         TextView sensorName;
+        TextView sensorAddress;
         ImageButton sensorDisconnect;
     }
 
@@ -98,13 +108,14 @@ public class SensorAdapter extends ArrayAdapter<BleDevice> {
             holder = new ViewHolder();
             holder.sensorName = (TextView) convertView.findViewById(R.id.device_name);
             holder.sensorValue = (TextView) convertView.findViewById(R.id.device_value);
+            holder.sensorAddress = (TextView) convertView.findViewById(R.id.device_address);
             holder.sensorDisconnect = (ImageButton) convertView.findViewById(R.id.button2);
             holder.sensorDisconnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BleDevice temp = aList.remove(position);
+                    BleDevice temp = aList.get(position);
                     SensorAdapter.this.notifyDataSetChanged();
-                    temp.disconnect();
+                    mSubLiist.remove(temp).unsubscribe();
 
                 }
             });
@@ -113,6 +124,7 @@ public class SensorAdapter extends ArrayAdapter<BleDevice> {
             holder = (ViewHolder) convertView.getTag();
 
         holder.sensorName.setText(rowItem.getName());
+        holder.sensorAddress.setText(rowItem.getAddress());
        subscribeForUpdates(rowItem,holder.sensorValue);
 
         return convertView;

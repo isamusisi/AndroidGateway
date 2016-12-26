@@ -1,4 +1,4 @@
-package com.example.wasswa.testtest5;
+package com.example.wasswa.testtest5.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -13,12 +13,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+
+import com.example.wasswa.testtest5.R;
+import com.example.wasswa.testtest5.model.SendListEvent;
+import com.example.wasswa.testtest5.adapter.SensorAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,16 +29,8 @@ import java.util.List;
 
 import io.relayr.android.RelayrSdk;
 import io.relayr.android.ble.BleDevice;
-import io.relayr.android.ble.service.BaseService;
-import io.relayr.android.ble.service.DirectConnectionService;
 import io.relayr.java.ble.BleDeviceType;
-import io.relayr.java.model.action.Reading;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class MainActivity extends AppCompatActivity {
 

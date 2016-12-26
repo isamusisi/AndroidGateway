@@ -1,4 +1,4 @@
-package com.example.wasswa.testtest5;
+package com.example.wasswa.testtest5.adapter;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
@@ -13,6 +13,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.wasswa.testtest5.R;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ import io.relayr.android.ble.BleDevice;
 
 public class BleScanAdapter extends BaseAdapter {
     private ArrayList<BleDevice> mLeDevices;
-    ArrayList<BleDevice> connectDeviceList;
+    public ArrayList<BleDevice> connectDeviceList;
     private LayoutInflater mInflator;
     Context context;
     public final static String INTENT_KEY = "deviceList";
@@ -90,7 +92,7 @@ public class BleScanAdapter extends BaseAdapter {
         if (view == null) {
             view = mInflator.inflate(R.layout.listviewitems, null);
             viewHolder = new ViewHolder();
-            //viewHolder.deviceAddress = (TextView) view.findViewById(R.id.device_address);
+            viewHolder.deviceAddress = (TextView) view.findViewById(R.id.sensorAddress);
             viewHolder.deviceName = (TextView) view.findViewById(R.id.textView);
             viewHolder.deviceState = (ToggleButton) view.findViewById(R.id.toggleButton);
             viewHolder.deviceState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -118,13 +120,14 @@ public class BleScanAdapter extends BaseAdapter {
         if (deviceName != null && deviceName.length() > 0){
             viewHolder.deviceName.setText(deviceName);
 
-        }else{
+        }else
             viewHolder.deviceName.setText(R.string.unknown_device);
-            //viewHolder.deviceAddress.setText(device.getAddress());
+
+        viewHolder.deviceAddress.setText(device.getAddress());
             if(true){
                 viewHolder.deviceState.setChecked(false);
 
-            }
+
         }
 
         return view;
